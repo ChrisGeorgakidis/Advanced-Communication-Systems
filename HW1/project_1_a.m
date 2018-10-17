@@ -9,14 +9,12 @@
 clear all
 close all
 
-% M = 2 % BPSK %
 SNRdB = 0:20; % SNR in dB %
 N = 100000; % number of bits %
 
 % System Specifications %
-% O = 1 % Oversampling %
 Eb = 1; % Energy / bit %
-% convert  SNR from db to linear: SNR(dB) = 10log10(SNR(linear)) %
+
 SNR_linear = 10.^(SNRdB/10);
 nOfIterations = 1;  % num of iterations for Monte Carlo Simulation %
 
