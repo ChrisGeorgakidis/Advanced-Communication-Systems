@@ -10,18 +10,25 @@ clear all
 close all
 
 SNRdB = 0:20; % SNR in dB %
-N = 100000; % number of bits %
+N = 100000; % number of bits 100000 %
 
 % System Specifications %
+OVERSAMPLE = 4;
 Eb = 1; % Energy / bit %
-
-SNR_linear = 10.^(SNRdB/10);
+SNR_linear = 10.^(SNRdB/10); % convert  SNR from db to linear: SNR(dB) = 10log10(SNR(linear)) %
 nOfIterations = 1;  % num of iterations for Monte Carlo Simulation %
 
 %  Transmitter  %
 bits = rand(1, N) > 0.5; % generating 0, 1 with equal probability %
-s = 2*bits - 1; % BPSK modulation 0 -> -1, 1 -> 1 %
-x = complex(s);
+s = 2*bits - 1 % BPSK modulation 0 -> -1, 1 -> 1 %
+s_over = [];
+for i = 1:N
+    for o = 1:OVERSAMPLE
+        s_over = [s_over s(i)];
+    end
+end
+
+x = complex(s_over);
 
 for ii = 1:length(SNRdB)
     %  Channel  %
@@ -29,8 +36,10 @@ for ii = 1:length(SNRdB)
 
 %     scatterplot(y);
 
+    samples = y(1:OVERSAMPLE:end);
+
     %  Receiver  %
-    output = real(y)>0; % decision %
+    output = real(samples)>0; % decision %
 
     % counting the errors %
     error_num = 0;
