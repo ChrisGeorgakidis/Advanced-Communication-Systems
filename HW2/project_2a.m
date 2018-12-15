@@ -20,7 +20,7 @@ N             = k*10000;        % number of bits, it is multiplied by log2(M) in
 Eb            = 1;              % Energy / bit %
 SNR_linear    = 10.^(SNRdB/10); % convert SNR from db to linear: SNR(dB) = 10log10(SNR(linear)) %
 nOfIterations = 10;             % num of iterations for Monte Carlo Simulation %
-T = 1 * k;
+T = 10 * k;
 
 % All Posible Symbols Generator - kind of look-up table, (look-up vector) %
 % each symbol i is in form s(i) = Acos(f(i)) + j * A * sin(f(i)) which is %
@@ -55,13 +55,9 @@ w = zeros(1,length(x));
 for i = 1:(length(x)/T)
     fadeI = 1 + sqrt(1)*randn(1);
     fadeQ = 1 + sqrt(1)*randn(1);
-%     noiseI = 1 + sqrt(1)*randn(1);
-%     noiseQ = 1 + sqrt(1)*randn(1);
     fade = 1 + 1 * ( randn(1) + 1i * randn);
-%     noise = noiseI + j * noiseQ;
     for ii = 1:T
         h((i-1)*T + ii) = fade;
-%         w((i-1)*T + ii) = noise;
     end
 end
     
@@ -81,6 +77,7 @@ for ii = 1:length(SNRdB)
         
         y_fade = h.*x + w; % No Channel Inversion %
         ci = h'/norm(h);
+        
         for l = 1:length(y_fade)
             y_fadeInv(l) = y_fade(l) * ci(l);
         end
