@@ -1,7 +1,7 @@
 %*************** Advanced Communication Systems*****************%
 %                       CE542, Fall 2018                        %
 %                       ECE, UTH, Greece                        %
-% File: project_1.m                                             %
+% File: project_3c.m                                             %
 % Authors: Christos Georgakidis (1964)                          %
 %***************************************************************%
 
